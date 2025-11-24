@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>CareerClock - Smart Application Tracker</title>
+ <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+ <div class="container">
+ <header>
+ <h1>💼 CareerClock - Application Tracker</h1>
+ <div id="motivational-tip" class="tip" aria-live="polite"></div>
+ </header>
+ 
+ <nav class="tabs" role="tablist">
+ <button class="tab-btn active" data-tab="reminders" role="tab" aria-selected="true">🕒 Reminders</button>
+ <button class="tab-btn" data-tab="links" role="tab" aria-selected="false">🔗 Links</button>
+ <button class="tab-btn" data-tab="settings" role="tab" aria-selected="false">⚙️ Settings</button>
+ </nav>
+ 
+ <main>
+ <!-- Reminders Tab -->
+ <section id="reminders-tab" class="tab-content active" role="tabpanel" aria-labelledby="reminders-tab">
+ <div id="reminders-list"></div>
+ <button id="add-reminder-btn" class="primary-btn">+ Add Reminder</button>
+ <div id="next-reminder-countdown" class="countdown" aria-live="polite"></div>
+ </section>
+ 
+        <!-- Links Tab -->
+     <section id="links-tab" class="tab-content" role="tabpanel" aria-labelledby="links-tab">
+<div id="links-list"></div>
+     </section>
+
+ <!-- Settings Tab -->
+ <section id="settings-tab" class="tab-content" role="tabpanel" aria-labelledby="settings-tab">
+ <form id="settings-form">
+ <label>
+ <input type="checkbox" id="sound-notification">
+ 🔊 Play sound on notification
+ </label>
+ <label>
+ <input type="checkbox" id="auto-popup">
+ 🪟 Auto-open popup on reminder
+ </label>
+ <label>
+ <input type="checkbox" id="system-notification">
+ 🔔 Show system notification
+ </label>
+ <label>
+ <input type="checkbox" id="auto-open-links">
+ 🚀 Auto-open all links (skip confirmation)
+ </label>
+ <button type="submit" class="primary-btn">💾 Save Settings</button>
+ </form>
+ </section>
+ </main>
+ 
+ <div id="toast" class="toast" aria-live="assertive"></div>
+ 
+ <!-- Modal for Adding/Editing Reminder -->
+ <div id="reminder-modal" class="modal">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h2 id="reminder-modal-title">Add Reminder</h2>
+ <button class="modal-close" id="reminder-modal-close">&times;</button>
+ </div>
+ <form id="reminder-form">
+ <div class="form-group">
+ <label for="reminder-name">Trigger Name *</label>
+ <input type="text" id="reminder-name" placeholder="e.g., Frontend Jobs" required>
+ </div>
+ 
+ <div class="form-group">
+ <label>Reminder Type *</label>
+ <div class="radio-group">
+ <label class="radio-label">
+ <input type="radio" name="reminder-type" value="daily" checked>
+ <span>Daily at specific time</span>
+ </label>
+ <label class="radio-label">
+ <input type="radio" name="reminder-type" value="interval">
+ <span>Recurring interval</span>
+ </label>
+ </div>
+ </div>
+ 
+ <div class="form-group" id="daily-time-group">
+ <label for="daily-time">Time (24-hour format) *</label>
+ <input type="time" id="daily-time" value="09:00" required>
+ <small style="display: block; margin-top: 4px; color: #718096; font-size: 0.85rem;">
+ 💡 Examples: 09:00 = 9:00 AM, 12:00 = 12:00 PM, 14:30 = 2:30 PM, 00:00 = 12:00 AM
+ </small>
+ </div>
+ 
+ <div class="form-group hidden" id="interval-group">
+ <label for="interval-value">Interval *</label>
+ <div class="input-group">
+ <input type="number" id="interval-value" min="1" placeholder="2" value="2">
+ <select id="interval-unit">
+ <option value="hours">Hours</option>
+ <option value="days">Days</option>
+ </select>
+ </div>
+ </div>
+ 
+ <div class="modal-actions">
+ <button type="button" class="btn-secondary" id="reminder-cancel">Cancel</button>
+ <button type="submit" class="btn-primary">Save Reminder</button>
+ </div>
+ </form>
+ </div>
+ </div>
+ 
+    <!-- Link Modal -->
+    <div id="link-modal" class="modal" role="dialog" aria-labelledby="link-modal-title" aria-hidden="true">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h2 id="link-modal-title">Add Link</h2>
+<button class="modal-close" id="link-modal-close" aria-label="Close">&times;</button>
+            </div>
+ <form id="link-form">
+       <div class="form-group">
+       <label for="link-name">Link Name *</label>
+       <input type="text" id="link-name" placeholder="e.g., Senior Developer at Google" required>
+     </div>
+                <div class="form-group">
+        <label for="link-url">Job URL *</label>
+         <input type="url" id="link-url" placeholder="https://..." required>
+        <small>Must start with http:// or https://</small>
+    </div>
+            <div class="modal-actions">
+         <button type="button" id="link-cancel" class="btn-secondary">Cancel</button>
+         <button type="submit" class="primary-btn">Save Link</button>
+                </div>
+   </form>
+        </div>
+    </div>
+
+ <!-- Confirmation Modal -->
+ <div id="confirm-modal" class="modal">
+ <div class="modal-content modal-small">
+ <div class="modal-header">
+ <h2 id="confirm-title">Confirm</h2>
+ <button class="modal-close" id="confirm-modal-close">&times;</button>
+ </div>
+ <div class="modal-body">
+ <p id="confirm-message"></p>
+ </div>
+ <div class="modal-actions">
+ <button type="button" class="btn-secondary" id="confirm-cancel">Cancel</button>
+ <button type="button" class="btn-primary" id="confirm-ok">OK</button>
+ </div>
+ </div>
+ </div>
+ 
+ <script src="popup.js"></script>
+</body>
+</html>

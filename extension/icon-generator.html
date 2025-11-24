@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <h2>Chrome Extension Icon Generator</h2>
+    <canvas id="canvas16" width="16" height="16"></canvas>
+    <canvas id="canvas32" width="32" height="32"></canvas>
+    <canvas id="canvas48" width="48" height="48"></canvas>
+    <canvas id="canvas128" width="128" height="128"></canvas>
+    <br><br>
+    <button onclick="downloadIcons()">Download Icons</button>
+
+    <script>
+    function drawIcon(canvas, size) {
+     const ctx = canvas.getContext('2d');
+   
+  // Create gradient background
+       const gradient = ctx.createLinearGradient(0, 0, size, size);
+ gradient.addColorStop(0, '#667eea');
+   gradient.addColorStop(1, '#764ba2');
+      
+  // Draw rounded rectangle
+        const radius = size * 0.15;
+ ctx.fillStyle = gradient;
+   ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fill();
+      
+            // Draw briefcase icon
+            ctx.fillStyle = 'white';
+         ctx.strokeStyle = 'white';
+       ctx.lineWidth = size * 0.05;
+    
+ // Briefcase body
+            const padding = size * 0.2;
+            const bodyWidth = size * 0.6;
+     const bodyHeight = size * 0.4;
+      const bodyX = (size - bodyWidth) / 2;
+            const bodyY = size * 0.35;
+            
+            ctx.fillRect(bodyX, bodyY, bodyWidth, bodyHeight);
+            
+  // Handle
+    const handleWidth = size * 0.25;
+         const handleHeight = size * 0.15;
+  const handleX = (size - handleWidth) / 2;
+    const handleY = bodyY - handleHeight * 0.7;
+          
+ ctx.strokeRect(handleX, handleY, handleWidth, handleHeight);
+            
+            // Lock/clasp
+     const claspWidth = size * 0.1;
+   const claspHeight = size * 0.08;
+     const claspX = (size - claspWidth) / 2;
+            const claspY = bodyY + bodyHeight * 0.3;
+            
+      ctx.fillRect(claspX, claspY, claspWidth, claspHeight);
+        }
+
+      // Draw all sizes
+        drawIcon(document.getElementById('canvas16'), 16);
+        drawIcon(document.getElementById('canvas32'), 32);
+        drawIcon(document.getElementById('canvas48'), 48);
+        drawIcon(document.getElementById('canvas128'), 128);
+
+        function downloadIcons() {
+    const sizes = [16, 32, 48, 128];
+ sizes.forEach(size => {
+       const canvas = document.getElementById('canvas' + size);
+        const url = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+  a.href = url;
+    a.download = `icon${size}.png`;
+      a.click();
+            });
+        }
+    </script>
+</body>
+</html>
