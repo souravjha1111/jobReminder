@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Instahyre Apply Helper",
+  "version": "1.0.0",
+  "description": "Assists with Instahyre applications and the similar-jobs follow-up dialog.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://www.instahyre.com/*", "https://instahyre.com/*"],
+  "action": {"default_title": "Instahyre Apply Helper", "default_popup": "popup.html"},
+  "content_scripts": [{
+    "matches": ["https://www.instahyre.com/*", "https://instahyre.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }]
+}
